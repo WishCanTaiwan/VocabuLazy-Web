@@ -1,4 +1,4 @@
-// Node Modules
+// Modules
 import Koa from 'koa';
 import path from 'path';
 import serve from 'koa-static';

@@ -1,9 +1,11 @@
-// Node Modules
+// Modules
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-// Components
-import App from './client/components/app';
+// App
+import App from './client/app';
+// Styles
+import 'semantic-ui-css/semantic.min.css';
 
 const render = (Component: typeof App) => {
   ReactDOM.render(
@@ -17,5 +19,5 @@ const render = (Component: typeof App) => {
 render(App);
 
 if (module.hot) {
-  module.hot.accept('./client/components/app', () => render(App));
+  module.hot.accept('./client/app', () => render(App));
 }

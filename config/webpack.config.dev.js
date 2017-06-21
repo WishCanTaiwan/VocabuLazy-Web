@@ -91,8 +91,18 @@ module.exports = {
         ]
       },
       {
-        test: /\.json$/,
-        loader: 'json'
+        test: /\.(ico|eot|otf|webp|ttf|woff|woff2)(\?.*)?$/,
+        use: 'file-loader?limit=100000'
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        use: [
+          'file-loader?limit=100000',
+          {
+            loader: 'img-loader',
+            options: { enabled: true, optipng: true }
+          }
+        ]
       }
     ]
   },

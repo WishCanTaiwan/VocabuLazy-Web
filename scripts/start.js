@@ -21,31 +21,31 @@ const HOST = process.env.HOST || '0.0.0.0';
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) { process.exit(1); }
 
 choosePort(HOST, DEFAULT_PORT)
-    .then(port => {
-        if (port == null) { return; }
-        const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
-        const appName = require(paths.appPackageJson).name;
-        const urls = prepareUrls(protocol, HOST, port);
-        const compiler = createCompiler(webpack, config, appName, urls, useYarn);
-        const proxySetting = require(paths.appPackageJson).proxy;
-        const proxyConfig = prepareProxy(proxySetting, paths.appPublic);
-        const serverConfig = createDevServerConfig(proxyConfig, urls.lanUrlForConfig);
-        const devServer = new WebpackDevServer(compiler, serverConfig);
-        devServer.listen(port, HOST, err => {
-            if (err) {
-                return console.log(err);
-            }
-            if (isInteractive) {
-                clearConsole();
-            }
-            openBrowser(urls.localUrlForBrowser);
-        });
-        ['SIGINT', 'SIGTERM'].forEach(sig => process.on(sig, () => {
-            devServer.close();
-            process.exit();
-        }));
-    })
-    .catch(err => {
-        if (err && err.message) { console.log(err.message); }
-        process.exit(1);
+  .then(port => {
+    if (port == null) { return; }
+    const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
+    const appName = require(paths.appPackageJson).name;
+    const urls = prepareUrls(protocol, HOST, port);
+    const compiler = createCompiler(webpack, config, appName, urls, useYarn);
+    const proxySetting = require(paths.appPackageJson).proxy;
+    const proxyConfig = prepareProxy(proxySetting, paths.appPublic);
+    const serverConfig = createDevServerConfig(proxyConfig, urls.lanUrlForConfig);
+    const devServer = new WebpackDevServer(compiler, serverConfig);
+    devServer.listen(port, HOST, err => {
+      if (err) {
+        return console.log(err);
+      }
+      if (isInteractive) {
+        clearConsole();
+      }
+      openBrowser(urls.localUrlForBrowser);
     });
+    ['SIGINT', 'SIGTERM'].forEach(sig => process.on(sig, () => {
+      devServer.close();
+      process.exit();
+    }));
+  })
+  .catch(err => {
+    if (err && err.message) { console.log(err.message); }
+    process.exit(1);
+  });

@@ -1,0 +1,21 @@
+{
+  "name": "vocabulazy-web",
+  "version": "0.0.1",
+  "description": "VocabuLazy web version.",
+  "author": "JerryZGY",
+  "license": "MIT",
+  "homepage": "https://github.com/WishCanTaiwan/VocabuLazy-Web#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WishCanTaiwan/VocabuLazy-Web.git"
+  },
+  "bugs": {
+    "url": "https://github.com/WishCanTaiwan/VocabuLazy-Web/issues"
+  },
+  "keywords": [
+    "vocabulazy"
+  ],
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}

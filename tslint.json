@@ -36,6 +36,9 @@
             "avoid-escape"
         ],
         "radix": false,
-        "switch-default": false
+        "switch-default": false,
+        "trailing-comma": [
+            false
+        ]
     }
 }

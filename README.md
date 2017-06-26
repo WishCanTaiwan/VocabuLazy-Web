@@ -1,3 +1,5 @@
+![VocabuLazy](https://github.com/WishCanTaiwan/VocabuLazy-Web/blob/assets/banner.png)
+
 # VocabuLazy-Web
 
 [![Travis CI](https://img.shields.io/travis/WishCanTaiwan/VocabuLazy-Web/feature/travis-ci.svg?style=flat-square)](https://travis-ci.org/WishCanTaiwan/VocabuLazy-Web)

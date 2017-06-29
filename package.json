@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "ts-babel-node src/serverEntry.ts",
+    "server": "ts-babel-node -F src/serverEntry.ts",
     "client": "node scripts/start.js",
     "test": "jest --coverage --forceExit || true"
   },

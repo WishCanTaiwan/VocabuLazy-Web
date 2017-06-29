@@ -59,7 +59,7 @@ module.exports = {
         include: paths.appSrc,
         use: [
           { loader: require.resolve('babel-loader'), options: { cacheDirectory: true } },
-          { loader: require.resolve('ts-loader') },
+          { loader: require.resolve('ts-loader'), options: { silent: true } },
         ]
       },
       {

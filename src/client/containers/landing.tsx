@@ -30,6 +30,7 @@ export default class Landing extends React.Component<ILandingProps, ILandingStat
           name='forum'
           active={activeItem === 'forum'}
           onClick={this.handleItemClick}
+          style={{'background-color': 'green'}}
         >
           學習論壇
         </Menu.Item>

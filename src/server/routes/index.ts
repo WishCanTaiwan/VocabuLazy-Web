@@ -1,6 +1,13 @@
-// Modules
+// Node Modules
 import Router from 'koa-router';
+// Routers
+import auth from './auth';
 
-const router = new Router();
+const publicRouter = new Router();
 
-export default router;
+publicRouter
+  .use('/api/auth', auth.routes());
+
+export {
+  publicRouter
+};

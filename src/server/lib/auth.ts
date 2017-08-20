@@ -17,11 +17,11 @@ passport.use(new GoogleStrategy(
     callbackURL
   },
   (accessToken, refreshToken, profile, done) => {
-    console.info(profile);
     const user = {
-      // ID: profile.id,
-      // name: profile.displayName,
-      // avatar: profile.avatarUrl
+      provider: profile.provider,
+      ID: profile.id,
+      name: profile.displayName,
+      avatar: profile.photos[0].value
     };
     done(null, user);
   }

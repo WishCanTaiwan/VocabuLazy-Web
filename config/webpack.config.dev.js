@@ -16,7 +16,6 @@ const env = getClientEnvironment(publicUrl);
 module.exports = {
   devtool: 'cheap-module-source-map',
   entry: [
-    require.resolve('react-hot-loader/patch'),
     require.resolve('react-dev-utils/webpackHotDevClient'),
     require.resolve('./polyfills'),
     require.resolve('react-error-overlay'),
@@ -29,70 +28,79 @@ module.exports = {
     chunkFilename: 'static/js/[name].chunk.js',
     publicPath: publicPath,
     devtoolModuleFilenameTemplate: info =>
-      path.resolve(info.absoluteResourcePath),
+      path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
   },
   resolve: {
     modules: ['node_modules', paths.appNodeModules].concat(process.env.NODE_PATH.split(path.delimiter).filter(Boolean)),
-    extensions: ['.tsx', '.ts', '.js', '.json', '.jsx'],
+    extensions: ['.ts', '.tsx', '.json'],
     alias: { 'react-native': 'react-native-web' },
-    plugins: [new ModuleScopePlugin(paths.appSrc)]
+    plugins: [new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])]
   },
   module: {
     strictExportPresence: true,
     rules: [
       {
-        exclude: [
-          /\.html$/,
-          /\.(js|jsx|ts|tsx)$/,
-          /\.(css|less|scss)$/,
-          /\.json$/,
-          /\.(svg)$/
-        ],
-        loader: require.resolve('url-loader'),
-        options: {
-          limit: 10000,
-          name: 'static/media/[name].[ext]'
-        }
-      },
-      {
-        test: /\.tsx?$/,
-        include: paths.appSrc,
-        use: [
-          { loader: require.resolve('babel-loader'), options: { cacheDirectory: true } },
-          { loader: require.resolve('ts-loader') },
-        ]
-      },
-      {
-        test: /\.css$/,
-        use: [
-          require.resolve('style-loader'),
+        oneOf: [
           {
-            loader: require.resolve('css-loader'),
-            options: { importLoaders: 1 },
+            test: [/\.ts$/, /\.tsx$/],
+            include: paths.appSrc,
+            use: [
+              {
+                loader: require.resolve('babel-loader'), options: {
+                  cacheDirectory: true,
+                  presets: ['react-app']
+                }
+              },
+              {
+                loader: require.resolve('ts-loader'), options: {
+                  silent: true,
+                  transpileOnly: true
+                }
+              },
+            ]
           },
           {
-            loader: require.resolve('postcss-loader'),
+            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+            loader: require.resolve('url-loader'),
             options: {
-              ident: 'postcss',
-              plugins: () => [
-                require('postcss-flexbugs-fixes'),
-                autoprefixer({
-                  browsers: [
-                    '>1%',
-                    'last 4 versions',
-                    'Firefox ESR',
-                    'not ie < 9', // React doesn't support IE8 anyway
-                  ],
-                  flexbox: 'no-2009',
-                }),
-              ],
+              limit: 10000,
+              name: 'static/media/[name].[hash:8].[ext]',
             },
           },
-        ]
-      },
-      {
-        test: /\.json$/,
-        loader: 'json'
+          {
+            test: /\.css$/,
+            use: [
+              require.resolve('style-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: { importLoaders: 1 },
+              },
+              {
+                loader: require.resolve('postcss-loader'),
+                options: {
+                  ident: 'postcss',
+                  plugins: () => [
+                    require('postcss-flexbugs-fixes'),
+                    autoprefixer({
+                      browsers: [
+                        '>1%',
+                        'last 4 versions',
+                        'Firefox ESR',
+                        'not ie < 9'
+                      ],
+                      flexbox: 'no-2009'
+                    }),
+                  ],
+                },
+              }
+            ],
+          },
+          {
+            exclude: [/\.js$/, /\.html$/, /\.json$/],
+            loader: require.resolve('file-loader'),
+            options: { name: 'static/media/[name].[hash:8].[ext]' }
+          }
+        ],
       }
     ]
   },
@@ -106,11 +114,10 @@ module.exports = {
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
   ],
   node: {
+    dgram: 'empty',
     fs: 'empty',
     net: 'empty',
-    tls: 'empty',
+    tls: 'empty'
   },
-  performance: {
-    hints: false,
-  },
+  performance: { hints: false }
 };

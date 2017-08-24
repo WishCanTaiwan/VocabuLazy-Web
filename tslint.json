@@ -1,7 +1,7 @@
 {
   "extends": "tslint:latest",
   "rules": {
-    "arrow-parens": false,
+    "arrow-parens": true,
     "eofline": false,
     "interface-over-type-literal": false,
     "linebreak-style": [

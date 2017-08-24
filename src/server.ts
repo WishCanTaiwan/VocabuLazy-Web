@@ -30,14 +30,6 @@ app
   .use(passport.session())
   .use(publicRouter.routes())
   .use(publicRouter.allowedMethods())
-  .use(async (ctx, next) => {
-    if (ctx.isAuthenticated()) {
-      await next();
-    } else {
-      ctx.redirect('/');
-    }
-  })
-  .use(async (ctx) => ctx.redirect('/'))
   .listen(config.port, () => {
     const { version, port, isDev } = config;
     const icon = isDev ? '⚙️' : '🌎';

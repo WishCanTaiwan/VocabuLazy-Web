@@ -6,8 +6,13 @@ import passport from '../lib/auth';
 const router = new Router();
 
 router.get(
-  '/login',
+  '/login/google',
   passport.authenticate('google', { scope: ['profile'] })
+);
+
+router.get(
+  '/login/facebook',
+  passport.authenticate('facebook')
 );
 
 router.get(
@@ -18,15 +23,19 @@ router.get(
   }
 );
 
+const options = {
+  successRedirect: '/',
+  failureRedirect: '/'
+};
+
 router.get(
-  '/callback',
-  passport.authenticate(
-    'google',
-    {
-      successRedirect: '/',
-      failureRedirect: '/'
-    }
-  )
+  '/callback/google',
+  passport.authenticate('google', options)
+);
+
+router.get(
+  '/callback/facebook',
+  passport.authenticate('facebook', options)
 );
 
 router.get(

@@ -6,11 +6,16 @@ const config = {
   port: 80,
   version: info.version,
   baseURL: 'http://localhost',
-  callbackURL: '/api/auth/callback',
   oAuth: {
     google: {
       clientID: '70011846552-psac0vjm9bpqe4kqei191rjj6en9b6ls.apps.googleusercontent.com',
-      clientSecret: 'U_j2GQXYpUsAubdskrkmgyEX'
+      clientSecret: 'U_j2GQXYpUsAubdskrkmgyEX',
+      callbackURL: '/api/auth/callback/google',
+    },
+    facebook: {
+      clientID: '738211496363289',
+      clientSecret: '7d91cdc7cd5cd446556c3aa64be20f74',
+      callbackURL: '/api/auth/callback/facebook',
     }
   }
 };

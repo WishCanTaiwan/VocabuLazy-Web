@@ -12,8 +12,8 @@
         "order": "fields-first"
       }
     ],
-    "no-switch-case-fall-through": true,
     "no-submodule-imports": false,
+    "no-switch-case-fall-through": true,
     "object-literal-key-quotes": false,
     "object-literal-sort-keys": false,
     "ordered-imports": false,

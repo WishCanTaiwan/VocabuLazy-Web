@@ -3,10 +3,11 @@
   "editor.tabSize": 2,
   "files.eol": "\n",
   "files.exclude": {
-    "**/node_modules": true
+    "**/node_modules": true,
+    ".vscode": true
   },
+  "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
   "html.format.extraLiners": "",
-  "html.format.indentInnerHtml": true,
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "html.format.indentInnerHtml": true
 }

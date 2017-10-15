@@ -1,48 +1,26 @@
 {
   "extends": "tslint:latest",
   "rules": {
-    "arrow-parens": true,
-    "eofline": false,
-    "interface-over-type-literal": false,
     "linebreak-style": [
       true,
       "LF"
     ],
-    "max-line-length": [
-      false
-    ],
-    "member-access": [
-      true,
-      "no-public"
-    ],
+    "max-line-length": false,
     "member-ordering": [
       true,
       {
         "order": "fields-first"
       }
     ],
-    "no-console": [
-      true,
-      "log"
-    ],
-    "no-inferrable-types": true,
-    "no-unused-expression": false,
-    "object-literal-key-quotes": [
-      false
-    ],
+    "no-switch-case-fall-through": true,
+    "no-submodule-imports": false,
+    "object-literal-key-quotes": false,
     "object-literal-sort-keys": false,
-    "ordered-imports": [
-      false
-    ],
+    "ordered-imports": false,
     "quotemark": [
       true,
-      "single",
-      "avoid-escape"
+      "single"
     ],
-    "radix": false,
-    "switch-default": false,
-    "trailing-comma": [
-      false
-    ]
+    "radix": false
   }
 }

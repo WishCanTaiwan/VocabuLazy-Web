@@ -1,17 +1,17 @@
+const fs = require('fs');
 const path = require('path');
 const paths = require('./paths');
-const webpack = require('webpack');
 const nodeExternals = require('webpack-node-externals');
+const projectDirectory = fs.realpathSync(process.cwd());
+const resolveProject = relativePath => path.resolve(projectDirectory, relativePath);
 
 module.exports = {
   node: { __dirname: true },
   target: 'node',
-  devtool: 'source-map',
+  devtool: 'cheap-module-source-map',
   context: paths.appSrc,
   externals: [nodeExternals()],
-  entry: [
-    paths.serverIndexJS
-  ],
+  entry: paths.serverIndexJS,
   output: {
     path: paths.appBuild,
     filename: 'server.js',
@@ -24,15 +24,11 @@ module.exports = {
     strictExportPresence: true,
     rules: [
       {
-        oneOf: [
-          {
-            test: [/\.ts$/, /\.tsx$/],
-            include: paths.appSrc,
-            use: [
-              { loader: require.resolve('babel-loader'), options: { cacheDirectory: true } },
-              { loader: require.resolve('ts-loader'), options: { silent: true, transpileOnly: true } },
-            ]
-          }
+        test: /\.(ts|tsx)$/,
+        include: paths.appSrc,
+        use: [
+          { loader: require.resolve('babel-loader'), options: { babelrc: false, cacheDirectory: true } },
+          { loader: require.resolve('ts-loader'), options: { silent: true, transpileOnly: true } },
         ]
       }
     ]

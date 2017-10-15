@@ -20,5 +20,5 @@ publicRouter
   });
 
 export {
-  publicRouter
+  publicRouter,
 };

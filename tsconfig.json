@@ -1,16 +1,19 @@
 {
   "compilerOptions": {
     "strict": true,
-    "module": "es6",
-    "target": "es6",
     "outDir": "dist",
-    "jsx": "preserve",
     "sourceMap": true,
+    "jsx": "preserve",
+    "target": "es2017",
+    "module": "esnext",
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "lib": [
-      "dom",
-      "es2017"
-    ]
-  }
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "typings/**/*.d.ts"
+  ]
 }

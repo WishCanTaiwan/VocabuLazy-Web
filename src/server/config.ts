@@ -16,8 +16,8 @@ const config = {
       clientID: '738211496363289',
       clientSecret: '7d91cdc7cd5cd446556c3aa64be20f74',
       callbackURL: '/api/auth/callback/facebook',
-    }
-  }
+    },
+  },
 };
 
 export default config;

@@ -9,7 +9,7 @@ import ReactDOM from 'react-dom';
 // Reducer
 // import rootReducer from './client/reducers';
 // Containers
-// import Root from './client/containers/root';
+import Root from './client/containers/root';
 // Styles
 // import 'semantic-ui-css/semantic.min.css';
 
@@ -34,7 +34,8 @@ import ReactDOM from 'react-dom';
 // ];
 
 // render(<Root store={store} history={history} routes={routes} />, document.getElementById('root'));
-ReactDOM.render(<div />, document.getElementById('root'));
+
+ReactDOM.render(<Root />, document.getElementById('root'));
 
 if (module.hot) {
   module.hot.accept();

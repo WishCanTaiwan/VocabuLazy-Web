@@ -32,86 +32,81 @@ module.exports = {
     path: paths.appBuild,
     filename: 'static/js/[name].[chunkhash:8].js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
-    publicPath: publicPath,
-    devtoolModuleFilenameTemplate: info =>
-      path
-        .relative(paths.appSrc, info.absoluteResourcePath)
-        .replace(/\\/g, '/'),
+    publicPath,
+    devtoolModuleFilenameTemplate: info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')
   },
   resolve: {
-    modules: ['node_modules', paths.appNodeModules].concat(
-      process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
-    ),
-    extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx', '.ts', '.tsx'],
-    alias: { 'react-native': 'react-native-web', },
-    plugins: [new ModuleScopePlugin(paths.appSrc)],
+    modules: ['node_modules', paths.appNodeModules].concat(process.env.NODE_PATH.split(path.delimiter).filter(Boolean)),
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+    alias: { 'react-native': 'react-native-web' },
+    plugins: [new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])]
   },
   module: {
     strictExportPresence: true,
     rules: [
       {
-        test: /\.tsx?$/,
-        include: paths.appSrc,
-        use: [
-          { loader: require.resolve('babel-loader'), options: { compact: true, cacheDirectory: true } },
-          { loader: require.resolve('ts-loader'), options: { silent: true, transpileOnly: true } },
-        ]
-      },
-      {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract(
-          Object.assign(
-            {
-              fallback: require.resolve('style-loader'),
-              use: [
-                {
-                  loader: require.resolve('css-loader'),
-                  options: {
-                    importLoaders: 1,
-                    minimize: true,
-                    sourceMap: shouldUseSourceMap,
-                  },
-                },
-                {
-                  loader: require.resolve('postcss-loader'),
-                  options: {
-                    ident: 'postcss',
-                    plugins: () => [
-                      require('postcss-flexbugs-fixes'),
-                      autoprefixer({
-                        browsers: [
-                          '>1%',
-                          'last 4 versions',
-                          'Firefox ESR',
-                          'not ie < 9'
-                        ],
-                        flexbox: 'no-2009'
-                      }),
-                    ],
-                  },
-                },
-                require.resolve('resolve-url-loader')
-              ],
-            },
-            extractTextPluginOptions
-          )
-        ),
-      },
-      {
-        test: /\.(ico|eot|otf|webp|ttf|woff|woff2)(\?.*)?$/,
-        use: 'file-loader?limit=100000&name=static/media/[name].[hash:8].[ext]'
-      },
-      {
-        test: /\.(jpe?g|png|gif|svg)$/i,
-        use: [
-          'file-loader?limit=8192&name=static/media/[name].[hash:8].[ext]',
+        oneOf: [
           {
-            loader: 'img-loader',
-            options: { enabled: true, optipng: true }
+            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+            loader: require.resolve('url-loader'),
+            options: { limit: 10000, name: 'static/media/[name].[hash:8].[ext]' }
+          },
+          {
+            test: /\.tsx?$/,
+            include: paths.appSrc,
+            use: [
+              { loader: require.resolve('babel-loader'), options: { compact: true, cacheDirectory: true } },
+              { loader: require.resolve('ts-loader'), options: { silent: true, transpileOnly: true } }
+            ]
+          },
+          {
+            test: /\.css$/,
+            loader: ExtractTextPlugin.extract(
+              Object.assign(
+                {
+                  fallback: require.resolve('style-loader'),
+                  use: [
+                    {
+                      loader: require.resolve('css-loader'),
+                      options: {
+                        importLoaders: 1,
+                        minimize: true,
+                        sourceMap: shouldUseSourceMap
+                      }
+                    },
+                    {
+                      loader: require.resolve('postcss-loader'),
+                      options: {
+                        ident: 'postcss',
+                        plugins: () => [
+                          require('postcss-flexbugs-fixes'),
+                          autoprefixer({
+                            browsers: [
+                              '>1%',
+                              'last 4 versions',
+                              'Firefox ESR',
+                              'not ie < 9'
+                            ],
+                            flexbox: 'no-2009'
+                          })
+                        ]
+                      }
+                    },
+                    require.resolve('resolve-url-loader')
+                  ]
+                },
+                extractTextPluginOptions
+              )
+            )
+          },
+          {
+            exclude: [/\.js$/, /\.html$/, /\.json$/],
+            loader: require.resolve('file-loader'),
+            options: { name: 'static/media/[name].[hash:8].[ext]' }
           }
         ]
       }
-    ],
+    ]
   },
   plugins: [
     new InterpolateHtmlPlugin(env.raw),
@@ -129,7 +124,7 @@ module.exports = {
         minifyJS: true,
         minifyCSS: true,
         minifyURLs: true
-      },
+      }
     }),
     new webpack.DefinePlugin(env.stringified),
     new webpack.optimize.UglifyJsPlugin({
@@ -158,6 +153,7 @@ module.exports = {
     dgram: 'empty',
     fs: 'empty',
     net: 'empty',
-    tls: 'empty'
-  },
+    tls: 'empty',
+    child_process: 'empty'
+  }
 };

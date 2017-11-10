@@ -25,6 +25,6 @@ module.exports = function (proxy, allowedHost) {
     setup(app) {
       app.use(errorOverlayMiddleware());
       app.use(noopServiceWorkerMiddleware());
-    },
+    }
   };
 };

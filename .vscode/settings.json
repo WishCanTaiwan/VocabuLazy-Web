@@ -7,7 +7,5 @@
     ".vscode": true
   },
   "files.insertFinalNewline": true,
-  "files.trimTrailingWhitespace": true,
-  "html.format.extraLiners": "",
-  "html.format.indentInnerHtml": true
+  "files.trimTrailingWhitespace": true
 }
